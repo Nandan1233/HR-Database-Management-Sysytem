@@ -1,0 +1,530 @@
+---Task 1 ------
+--Q1----------
+--A
+select * from employees;
+--B
+Select first_name , last_name, hire_date , salary from employees;
+--C
+Select first_name , last_name , salary 'New_salary' from employees;
+--D
+SELECT  first_name, last_name, salary, salary * 1.05 AS new_salary FROM employees;
+
+--Q2----
+--A
+Select employee_id , first_name ,last_name ,salary , hire_date from employees;
+--B
+Select * from employees order by first_name;
+--C
+Select first_name , last_name  from employees order by first_name , last_name Desc;
+--D
+Select salary from employees order by salary Desc;
+--E
+Select hire_date from employees order by hire_date;
+--F
+Select hire_date from employees order by hire_date Desc;
+
+--Q3--
+--A--
+Select salary from employees order by salary desc;
+--B--
+Select Distinct(salary) from employees order by salary desc; 
+--C--
+Select job_id , salary from employees order by job_id , salary;
+--D----
+Select Distinct job_id , salary from employees order by job_id , salary desc;
+---E--
+Select Distinct(Phone_number) from employees order by Phone_number;
+
+--Q4--
+--A--
+Select first_name from employees order by first_name Desc; 
+--B--
+Select Top(5) *  from employees;
+--C--
+select * from employees order by employee_id OFFSET 4 ROWS Fetch Next 5 Rows only; 
+--D----
+Select   Top(5) salary  from employees order by salary desc;
+--E---
+Select Max(salary) from employees where salary < (Select Max(salary) from employees);
+
+--Q5--
+--A--
+Select salary from employees where salary >=14000 order by salary desc;
+--B--
+Select * from employees where department_id = 5;
+--C---
+Select * from employees where last_name ='Chen';
+--D--
+Select * from employees where hire_date > 01/01/1999;
+--E--
+Select * from employees where hire_date = 1999;
+--F--
+select * from employees where last_name = 'Himuro';
+--G--
+select last_name from employees where last_name = 'Himuro';
+--H--
+select phone_number  from employees where phone_number = null;
+--I--
+select * from employees where department_id <> 8
+--j--
+select * from employees where department_id <> 8 and department_id <> 10; 
+--K--
+select * from employees where salary > 10000;
+--L--
+select * from employees where  department_id = 8 and salary > 10000;
+--M--
+select * from employees where salary < 10000;
+--N--
+select * from employees where salary >= 9000;
+--O--
+select * from employees where salary <= 9000;
+
+--Q6--
+--A---
+ALTER TABLE courses ADD credit_hours INT NOT NULL;
+Drop Table  courses;
+CREATE TABLE courses (
+    course_id INT  PRIMARY KEY,
+    course_name VARCHAR(50) NOT NULL
+);
+Select * from courses;
+--B--
+Alter Table courses Add fee  Numeric (10, 2)   ,  max_limt
+int ;
+--C--
+Alter Table courses MODIFY fee Numeric (10,2) NOT NUll;
+--D--
+Alter Table courses drop  column fee;
+--E--
+Alter Table courses drop column max_limt, drop column credit_hours;
+
+CREATE  TABLE  projects (
+    project_id  INT  PRIMARY KEY,
+    project_name  VARCHAR(255),
+    start_date  DATE  NOT NULL,
+    end_date  DATE  NOT NULL
+);
+
+
+CREATE  TABLE  project_milestones(
+    milestone_id  INT  PRIMARY KEY,
+    project_id   INT,
+    milestone_name VARCHAR(100)
+);
+
+
+--Q6---
+--A--
+CREATE TABLE project_milestones (
+    milestone_id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT,
+    milestone_name VARCHAR(100),
+    FOREIGN KEY (project_id)
+        REFERENCES projects (project_id)
+);
+
+--B--
+CREATE TABLE project_milestones (
+    milestone_id INT  PRIMARY KEY,
+    project_id INT,
+    milestone_name VARCHAR(100),
+    CONSTRAINT fk_project FOREIGN KEY (project_id)
+        REFERENCES projects (project_id)
+);
+
+--Task2--
+--A--
+select * from employees where salary >5000 and salary <7000;
+--B--
+select * from employees where salary = 5000 or salary = 7000;
+--C--
+select * from employees where phone_number is null;
+--D--
+select * from employees where salary between 9000 and 12000;
+--E--
+select * from employees where department_id  in (8 , 9);
+--F--
+select * from employees where first_name like 'jo%';
+--G--
+select * from employees where first_name like '_h%';
+--H--
+select * from employees where salary >= ALL(select salary from employees where department_id = 8);
+
+---2Q--
+--A--
+
+
+
+
+--3Q--
+--A--
+select * from employees where first_name like 'Da%';
+--B--
+select * from employees where first_name like '%er';
+--C--
+select * from employees where last_name like '%an';
+--D--
+select * from employees where first_name like '%jo__';
+--E--
+select * from employees where first_name like '%are_';
+--F--
+select * from employees where first_name like 'S%'  AND first_name  NOT like 'SH%';
+
+--4Q--
+--A--
+Select * from employees where department_id = 5;
+--B--
+Select * from employees where department_id = 5 and salary !> 5000;
+--C--
+Select * from employees where department_id in(1,2,3) order by department_id;
+--D--
+Select * from employees where first_name NOT LIKE 'D%';
+--E--
+select * from employees where salary Not Between 1000 and 5000; 
+
+--Q5---
+--A
+
+--B--
+select * from employees where phone_number is  null;
+--C--
+Select first_name ,phone_number from employees where  phone_number is not null;
+
+
+--Task No--
+--Q3--
+--A--
+select * from employees where department_id in (1,2,3);
+--B--
+select * from employees a inner join departments b ON 
+a.department_id = b.department_id where a.department_id in (1,2,3);
+--C--
+select  first_name, last_name, job_title, department_name from employees a
+INNER JOIN jobs b ON a.job_id = b.job_id
+INNER JOIN departments c 
+ON a.department_id = c.department_id where a.department_id in (1,2,3);
+
+select * from locations
+--Left join---
+--A--
+select * from countries a left join locations b ON a.country_id = b.country_id
+where a.country_name in ('US','UK','China');
+--B--
+select * from countries a Right join locations b ON a.country_id = b.country_id
+where b.country_id in ('US','UK','China');
+--C--
+select * from countries a inner join locations b 
+ON a.country_id = b.country_id; 
+--D--
+select * from countries a Right join locations b 
+ON  a.country_id = b.country_id where state_province is null;
+
+--Self join--
+SELECT 
+    e.first_name || ' ' || e.last_name AS employee,
+    m.first_name || ' ' || m.last_name AS manager
+FROM
+    employees e
+        INNER JOIN
+    employees m ON m.employee_id = e.manager_id
+ORDER BY manager;
+
+--2--president
+SELECT 
+    e.first_name || ' ' || e.last_name AS employee,
+    m.first_name || ' ' || m.last_name AS manager
+FROM
+    employees e
+        LEFT JOIN
+    employees m ON m.employee_id = e.manager_id
+ORDER BY manager;
+--Full outer join --
+CREATE TABLE fruits (
+	fruit_id INTEGER PRIMARY KEY,
+	fruit_name VARCHAR (255) NOT NULL,
+	basket_id INTEGER
+);
+
+INSERT INTO fruits (
+	fruit_id,
+	fruit_name,
+	basket_id
+)
+VALUES
+	(1, 'Apple', 1),
+	(2, 'Orange', 1),
+	(3, 'Banana', 2),
+	(4, 'Strawberry', NULL);
+	select * from fruits;
+INSERT INTO baskets (basket_id, basket_name)
+VALUES
+	(1, 'A'),
+	(2, 'B'),
+	(3, 'C');
+
+CREATE TABLE baskets (
+	basket_id INTEGER PRIMARY KEY,
+	basket_name VARCHAR (255) NOT NULL
+);
+select * from baskets;
+--A--
+SELECT
+	basket_name,
+	fruit_name
+FROM
+	fruits
+FULL OUTER JOIN baskets ON baskets.basket_id = fruits.basket_id;
+--B--
+SELECT
+	basket_name,
+	fruit_name
+FROM
+	fruits
+FULL OUTER JOIN baskets ON baskets.basket_id = fruits.basket_id
+WHERE
+	fruit_name IS NULL;
+--C--
+SELECT
+	basket_name,
+	fruit_name
+FROM
+	fruits
+FULL OUTER JOIN baskets ON baskets.basket_id = fruits.basket_id
+WHERE
+	basket_name IS NULL;
+
+	--Cross join---
+	SELECT
+	sales_org,
+	channel
+FROM
+	sales_organization
+CROSS JOIN sales_channel; 
+
+--Group by__
+--A--
+select department_id from employees Group by department_id;
+--B--
+select department_id , count(employee_id)headcount from employees group by department_id;
+--C--
+SELECT	department_name,	COUNT(employee_id) headcount FROM
+	employees e INNER JOIN departments d ON d.department_id = e.department_id
+GROUP BY department_name;
+--D--
+SELECT	department_name,	COUNT(employee_id) headcount FROM
+	employees e INNER JOIN departments d ON d.department_id = e.department_id
+GROUP BY department_name
+ORDER BY headcount DESC;
+--E--
+select department_name , count(employee_id) headcount  from
+employees e INNER join departments d  ON
+e.department_id = d.department_id 
+Group by department_name
+Having headcount > 5
+order by headcount Desc;
+--F--
+select * from employees;
+select min(salary) min_salary ,max(salary) max_salary ,
+Round(avg(salary) , 2) average_salary
+from employees e inner join departments d 
+ON d.department_id = e.department_id 
+group by department_name;
+--G--
+select  d.department_name  , sum(salary) 'Total_salary'  from employees e
+inner join departments d ON 
+e.department_id = d.department_id Group by department_name;
+--H--
+select department_name , job_title , count(employee_id) from employees e
+inner join departments d ON 
+e.department_id = d.department_id
+inner join jobs j
+ON j.job_id = e.job_id
+Group by department_name ,
+job_title;
+
+---Having clause----
+--A--
+SELECT 
+    manager_id,
+    first_name,
+    last_name,
+    COUNT(employee_id) direct_reports
+FROM
+    employees
+WHERE
+    manager_id IS NOT NULL
+GROUP BY manager_id;
+--B--
+SELECT 
+    manager_id,
+    first_name,
+    last_name,
+    COUNT(employee_id) direct_reports
+FROM
+    employees
+WHERE
+    manager_id IS NOT NULL
+GROUP BY manager_id
+HAVING direct_reports >= 5;
+--C--
+SELECT 
+    department_id, SUM(salary)
+FROM
+    employees
+GROUP BY department_id
+HAVING SUM(salary) BETWEEN 20000 AND 30000
+ORDER BY SUM(salary);
+--D--
+SELECT
+	e.department_id,
+	department_name,
+	MIN(salary)
+FROM
+	employees e
+INNER JOIN departments d ON d.department_id = e.department_id
+GROUP BY
+	e.department_id
+HAVING
+	MIN(salary) >= 10000
+ORDER BY
+	MIN(salary);
+--E--
+SELECT
+	e.department_id,
+	department_name,
+	ROUND(AVG(salary), 2)
+FROM
+	employees e
+INNER JOIN departments d ON d.department_id = e.department_id
+GROUP BY
+	e.department_id
+HAVING
+	AVG(salary) BETWEEN 5000
+AND 7000
+ORDER BY
+	AVG(salary);
+
+--Unioun--
+--Task 5--
+select first_name , last_name from employees 
+union 
+select last_name , last_name  from dependents;
+
+--INTERSECT--
+select * from A
+INTERSECT
+select * from B
+order by A desc;
+
+--Exist--
+select employee_id ,first_name ,last_name 
+from  employees e where Exists (Select 1 from dependents d
+where e.employee_id = d.employee_id);
+--2-
+select employee_id ,first_name , last_name 
+from employees e where  NOt Exists (select * from dependents d 
+where e.employee_id = d.employee_id);
+---update--
+--1--
+update employees set last_name = 'Lopez'
+where employee_id = 192;
+--2--
+UPDATE dependents
+SET last_name = (
+	SELECT
+		last_name
+	FROM
+		employees
+	WHERE
+		employee_id = dependents.employee_id
+)
+select * from dependents;
+
+---sub querey---
+--A---
+select employee_id , first_name ,last_name 
+from employees where department_id in (select department_id 
+from departments where location_id = 1700)
+order by first_name , last_name ;
+--B--
+select employee_id ,first_name , last_name 
+from employees where department_id NOT IN (select department_id 
+from departments where location_id = 1700) 
+order by first_name , last_name; 
+--C--
+Select employee_id ,first_name ,last_name 
+from employees where salary =  (select Max(salary) from employees) 
+order by first_name , last_name; 
+--D--
+select employee_id ,first_name ,last_name 
+from employees where salary > (select Avg(salary)
+from employees);
+--E--
+select department_name from departments d 
+ where Exists (Select 1 from employees e  where salary > 10000
+ And e.department_id  = d.department_id)
+ order by department_id;
+ --F--
+ select department_name from departments d 
+ where  NOT Exists (Select 1 from employees e  where salary > 10000
+ And e.department_id  = d.department_id)
+ order by department_id;
+ --G--
+ select min(salary) from employees
+ Group by department_id 
+ order by min(salary) desc; 
+ --H--
+ SELECT 
+    employee_id, first_name, last_name, salary
+FROM
+    employees
+WHERE
+    salary >= ALL (SELECT 
+            MIN(salary)
+        FROM
+            employees
+        GROUP BY department_id)
+ORDER BY first_name , last_name;
+--I--
+SELECT 
+    employee_id, first_name, last_name, salary
+FROM
+    employees
+WHERE
+    salary >= SOME (SELECT 
+            MAX(salary)
+        FROM
+            employees
+        GROUP BY department_id);
+--j--
+SELECT 
+    AVG(salary) average_salary
+FROM
+    employees
+GROUP BY department_id;
+--K--
+SELECT 
+    ROUND(AVG(average_salary), 0)
+FROM
+    (SELECT 
+        AVG(salary) average_salary
+    FROM
+        employees
+    GROUP BY department_id) department_salary;
+--L--
+SELECT 
+    employee_id,
+    first_name,
+    last_name,
+    salary,
+    (SELECT 
+            ROUND(AVG(salary), 0)
+        FROM
+            employees) average_salary,
+    salary - (SELECT 
+            ROUND(AVG(salary), 0)
+        FROM
+            employees) difference
+FROM
+    employees
+ORDER BY first_name , last_name;
